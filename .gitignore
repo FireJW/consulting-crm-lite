@@ -1,0 +1,4 @@
+.local/
+output/playwright/
+__pycache__/
+*.pyc

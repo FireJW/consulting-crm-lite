@@ -1,0 +1,2 @@
+name,email,company,role,current_workflow,pain_points,ai_tools,desired_outcome,budget_range,time_urgency,source
+Sample Founder,sample-founder@example.invalid,Sample Studio,Founder,Manual content planning in docs,Wasting time every week; no reusable workflow,"ChatGPT, Claude",A repeatable AI product workflow,1000-3000,this_week,tally
