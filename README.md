@@ -11,6 +11,7 @@ data is synthetic.
 
 - Docs site: https://firejw.github.io/consulting-crm-lite/
 - Demo runbook: [docs/demo-runbook.md](docs/demo-runbook.md)
+- Demo transcript: [docs/demo-transcript.md](docs/demo-transcript.md)
 - Privacy notes: [docs/security-and-privacy.md](docs/security-and-privacy.md)
 - Case-study framing: [docs/case-study.md](docs/case-study.md)
 
@@ -114,6 +115,9 @@ Most read-only views support `--format json` for machine-readable handoffs.
 
 See [docs/security-and-privacy.md](docs/security-and-privacy.md) for the full
 public-facing boundary.
+
+For a concrete end-to-end sample, see the public
+[demo transcript](docs/demo-transcript.md).
 
 ## Testing
 

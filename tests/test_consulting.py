@@ -1,5 +1,6 @@
 import csv
 import json
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -23,6 +24,49 @@ class ConsultingCliTest(unittest.TestCase):
         if check and result.returncode != 0:
             self.fail(f"command failed: {result.stderr}\nstdout:\n{result.stdout}")
         return result
+
+    def test_readme_script_form_initializes_default_local_db_path(self):
+        local_root = ROOT / ".local"
+        local_root.mkdir(exist_ok=True)
+        db = local_root / "readme-script-form-test.sqlite"
+        if db.exists():
+            db.unlink()
+        try:
+            result = subprocess.run(
+                [sys.executable, ".\\consulting.py", "init-db", "--db", ".local\\readme-script-form-test.sqlite"],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(db.exists())
+            self.assertIn("Initialized DB", result.stdout)
+        finally:
+            if db.exists():
+                db.unlink()
+
+    @unittest.skipIf(shutil.which("py") is None, "Windows py launcher is not available")
+    def test_windows_py_launcher_initializes_default_local_db_path(self):
+        local_root = ROOT / ".local"
+        local_root.mkdir(exist_ok=True)
+        db = local_root / "py-launcher-test.sqlite"
+        if db.exists():
+            db.unlink()
+        try:
+            result = subprocess.run(
+                ["py", ".\\consulting.py", "init-db", "--db", ".local\\py-launcher-test.sqlite"],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(db.exists())
+            self.assertIn("Initialized DB", result.stdout)
+        finally:
+            if db.exists():
+                db.unlink()
 
     def write_leads_csv(self, path):
         rows = [

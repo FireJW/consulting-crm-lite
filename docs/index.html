@@ -184,6 +184,16 @@
         font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       }
 
+      .command-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+      }
+
+      .command-list code {
+        overflow-wrap: anywhere;
+      }
+
       .pipeline {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -235,7 +245,7 @@
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
         gap: 14px;
       }
 
@@ -365,9 +375,46 @@
           width: 100%;
         }
 
-        .status-table {
+        .status-table,
+        .status-table tbody,
+        .status-table tr,
+        .status-table td {
           display: block;
-          overflow-x: auto;
+        }
+
+        .status-table {
+          border: 0;
+          background: transparent;
+        }
+
+        .status-table thead {
+          display: none;
+        }
+
+        .status-table tr {
+          margin-bottom: 12px;
+          border: 1px solid var(--line);
+          border-radius: var(--radius);
+          background: var(--white);
+          overflow: hidden;
+        }
+
+        .status-table td {
+          display: grid;
+          grid-template-columns: 92px minmax(0, 1fr);
+          gap: 12px;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .status-table td::before {
+          content: attr(data-label);
+          color: var(--muted);
+          font-weight: 800;
+        }
+
+        .status-table tr:last-child td,
+        .status-table td:last-child {
+          border-bottom: 0;
         }
       }
     </style>
@@ -379,6 +426,7 @@
         <div class="nav-links">
           <a href="https://github.com/FireJW/consulting-crm-lite">GitHub</a>
           <a href="demo-runbook.md">Runbook</a>
+          <a href="demo-transcript.md">Transcript</a>
           <a href="security-and-privacy.md">Privacy</a>
           <a href="case-study.md">Case Study</a>
         </div>
@@ -444,6 +492,10 @@ case_study_approved=false</code></pre>
             <h3>Preview-only exports</h3>
             <p>Obsidian-style notes are restricted to preview/local output paths rather than live vaults.</p>
           </article>
+          <article class="card">
+            <h3>Runnable transcript</h3>
+            <p><a href="demo-transcript.md">Review the synthetic demo output</a> from intake through the approval gate.</p>
+          </article>
         </div>
       </section>
 
@@ -459,24 +511,24 @@ case_study_approved=false</code></pre>
           </thead>
           <tbody>
             <tr>
-              <td><span class="tag">Intake</span></td>
-              <td><code>import-leads</code>, <code>score-leads</code>, <code>list-leads</code></td>
-              <td>Reads CSV, stores a local hash, exposes anonymized aliases.</td>
+              <td data-label="Area"><span class="tag">Intake</span></td>
+              <td data-label="Commands"><span class="command-list"><code>import-leads</code><code>score-leads</code><code>list-leads</code></span></td>
+              <td data-label="Boundary">Reads CSV, stores a local hash, exposes anonymized aliases.</td>
             </tr>
             <tr>
-              <td><span class="tag blue">Delivery</span></td>
-              <td><code>generate-proposal</code>, <code>generate-delivery-report</code>, <code>generate-followup</code></td>
-              <td>Writes Markdown artifacts under local output paths.</td>
+              <td data-label="Area"><span class="tag blue">Delivery</span></td>
+              <td data-label="Commands"><span class="command-list"><code>generate-proposal</code><code>generate-delivery-report</code><code>generate-followup</code></span></td>
+              <td data-label="Boundary">Writes Markdown artifacts under local output paths.</td>
             </tr>
             <tr>
-              <td><span class="tag rust">Review</span></td>
-              <td><code>validate-project</code>, <code>what-remains</code>, <code>export-review-packet</code></td>
-              <td>Creates readiness summaries for human review before sharing.</td>
+              <td data-label="Area"><span class="tag rust">Review</span></td>
+              <td data-label="Commands"><span class="command-list"><code>validate-project</code><code>what-remains</code><code>export-review-packet</code></span></td>
+              <td data-label="Boundary">Creates readiness summaries for human review before sharing.</td>
             </tr>
             <tr>
-              <td><span class="tag">Case study</span></td>
-              <td><code>approve-case-study</code>, <code>revoke-case-study-approval</code>, <code>export-case-study</code></td>
-              <td>Blocks draft export until approval is explicitly recorded.</td>
+              <td data-label="Area"><span class="tag">Case study</span></td>
+              <td data-label="Commands"><span class="command-list"><code>approve-case-study</code><code>revoke-case-study-approval</code><code>export-case-study</code></span></td>
+              <td data-label="Boundary">Blocks draft export until approval is explicitly recorded.</td>
             </tr>
           </tbody>
         </table>
